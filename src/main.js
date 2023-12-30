@@ -16,7 +16,7 @@ export default async ({ req, res, log, error }) => {
 	const lastLoginTime = new Date().toISOString();
 
 	try {
-		const response = await database.updateDocument("appData", "users", userId, {
+		const response = await database.updateDocument("appData", "users", `${userId}`, {
 			isActive: isActive,
 			lastVisitAt: lastLoginTime,
 		});
