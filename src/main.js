@@ -8,8 +8,8 @@ export default async ({ req, res, log, error }) => {
 
 	const database = new Databases(client);
 	log(req.bodyRaw);
-
-	log(req.bodyRaw.userId, req.bodyRaw.isActive);
+	const payload = JSON.parse(req.bodyRaw);
+	log(payload.userId, payload.isActive);
 	const userId = req.bodyRaw.userId;
 	const isActive = req.bodyRaw.isActive;
 	const lastLoginTime = new Date().toISOString();
