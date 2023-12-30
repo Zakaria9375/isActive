@@ -9,21 +9,26 @@ export default async ({ req, res, log, error }) => {
 	const database = new Databases(client);
 	log(req.bodyRaw);
 	const payload = JSON.parse(req.bodyRaw);
-	log(payload.userId);
 	log(payload.isActive);
-	const userId = req.bodyRaw.userId;
-	const isActive = req.bodyRaw.isActive;
+	log(payload.userId);
+	const userId = payload.userId;
+	const isActive = payload.isActive;
 	const lastLoginTime = new Date().toISOString();
 
 	try {
-		const response = await database.updateDocument("appData", "users", `${userId}`, {
-			isActive: isActive,
-			lastVisitAt: lastLoginTime,
-		});
-		log("User status updated:", response);
-		return res.json(response);
+		const response = await database.updateDocument(
+			"appData",
+			"users",
+			userId,
+			{
+				isActive: isActive,
+				lastVisitAt: lastLoginTime,
+			}
+		);
+		log("User status updated:" + JSON.stringify(response));
+		return res.send(response);
 	} catch (e) {
-		error("Error updating user status:", e);
-		return res.json({ error: e.message });
+		error("Failed to update user status: " + e.message);
+		return res.send("Failed to update document");
 	}
 };
