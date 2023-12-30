@@ -9,7 +9,8 @@ export default async ({ req, res, log, error }) => {
 	const database = new Databases(client);
 	log(req.bodyRaw);
 	const payload = JSON.parse(req.bodyRaw);
-	log(payload.userId, payload.isActive);
+	log(payload.userId);
+	log(payload.isActive);
 	const userId = req.bodyRaw.userId;
 	const isActive = req.bodyRaw.isActive;
 	const lastLoginTime = new Date().toISOString();
