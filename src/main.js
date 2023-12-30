@@ -7,17 +7,11 @@ export default async ({ req, res, log, error }) => {
 	log("Function is triggered");
 
 	const database = new Databases(client);
-	let payload;
-	try {
-		payload = JSON.parse(req.bodyRaw);
-	} catch (e) {
-		error("Error parsing JSON:", e);
-		return res.json({ error: "Invalid JSON format" });
-	}
-	const userId = payload.userId;
-	const isActive = payload.isActive;
+
+	const userId = req.bodyRaw.userId;
+	const isActive = req.bodyRaw.isActive;
 	const lastLoginTime = new Date().toISOString();
-	log("Payload is", payload);
+	log("Payload is", userId, isActive);
 	log("lastLoginTime is", lastLoginTime);
 
 	try {
